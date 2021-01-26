@@ -1,0 +1,10 @@
+#!/bin/bash
+
+wildcard="$2"
+if [ -z "$wildcard" ]
+then
+    wildcard="*py"
+fi
+
+grep --color -r "$1" . --include "$wildcard" --exclude "test/" | grep -v "^./test/"
+

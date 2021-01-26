@@ -1,6 +1,8 @@
 #!/bin/bash
 
-scripts_path=$(pwd)
+# Note: Run from repo root directory
+
+scripts_path=$PWD
 
 # Run system-specific initialization
 env=$(uname)
@@ -9,5 +11,9 @@ if [[ "$env" == "Darwin" ]]; then
 fi
 
 # Create ~/.bash_profile pointing to custom .bash_profile
-echo -e ". ${scripts_path}/Bash/.bash_profile \n. ${scripts_path}/Bash/.bash_aliases" > ~/.bash_profile
+cat > ~/.bash_profile <<- EOM
+export PATH=$PATH:${scripts_path}/bin
+. ${scripts_path}/Bash/.bash_profile
+. ${scripts_path}/Bash/.bash_aliases
+EOM
 chmod a+x ~/.bash_profile

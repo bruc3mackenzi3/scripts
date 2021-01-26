@@ -8,7 +8,8 @@ alias ll='ls -l'
 
 alias 'py=python'
 alias 'pyjson=python -m json.tool'
-alias 'mkcd=. mkcd.sh'
+alias 'mkcd=. mkcd'
+alias 'cdrm=. cdrm'
 
 # Git aliases
 alias 'gh=git help'

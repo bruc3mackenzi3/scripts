@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Check for branch argument
+if [ -z "$1" ]
+then
+	echo "Error: must supply branch name"
+	exit 1
+fi
+
+stashed_changes=false
+if [ "$(git status | grep -c 'Changes not staged for commit')" != "0" ]
+then
+	git stash
+	stashed_changes=true
+fi
+
+
+git checkout master && \
+git pull && \
+git checkout $1 && \
+git rebase master
+
+if $stashed_changes
+then
+	git stash pop
+fi

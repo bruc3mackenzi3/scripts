@@ -1,0 +1,11 @@
+#!/usr/bin/python
+import simplejson as json
+#import ast
+import sys
+
+with open(sys.argv[1], 'r') as rd:
+        #dat = ast.literal_eval(rd.readline())
+        dat = json.loads(rd.readline())
+
+print json.dumps(dat, sort_keys=True, indent=4, separators=(',', ': '))
+

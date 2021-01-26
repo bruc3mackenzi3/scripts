@@ -1,0 +1,27 @@
+#!/bin/bash
+
+usage_str="Usage:\n\
+\tget_json_field <key> [key 2] [key 3] ...
+Where:
+\tkey is a key in the JSON file whose value to extract
+Pipe JSON data from stdin with one per line"
+
+# Check for branch argument
+if [ -z "$1" ]
+then
+	echo "Error: Invalid arguments"
+	echo -e "$usage_str"
+	exit 1
+fi
+
+key=$1
+
+#grep "$key" | awk -F "\"$key\": *" '{print $2}' | awk -F ', *' '{print $1}'
+while read line
+do
+	for key in "$@"
+	do
+		echo -n "$(echo $line | grep "$key" | awk -F "\"$key\": *" '{print $2}' | awk -F ', *' '{print $1}') "
+	done
+	echo
+done < /dev/stdin

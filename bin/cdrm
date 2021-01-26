@@ -1,0 +1,4 @@
+# cd to parent directory and rm directory
+dirname=${PWD##*/}
+cd ..
+rmdir $dirname

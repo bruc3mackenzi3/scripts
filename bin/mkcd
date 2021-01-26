@@ -1,0 +1,23 @@
+#!/bin/bash
+# mkcd.sh - make a directory then move into it
+# Must be run in current shell: ". mkcd.sh"
+# This script is indended as a convenience so it's useful to set the alias:
+#   alias mkcd=". mkcd.sh"
+
+# Display usage message on standard error
+function usage {
+    echo "Usage: mkcd FOLDER"
+    echo "Create a folder and cd to it in one command"
+}
+
+# catch signals to exit gracefully
+trap SIGHUP SIGINT SIGTERM
+
+# check for arguments passed
+if [ $# -ne 1 ]; then
+    echo "mkcd: missing folder name" 1>&2
+    usage 1>&2
+else
+    mkdir $1
+    cd $1
+fi
