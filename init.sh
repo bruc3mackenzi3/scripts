@@ -17,3 +17,5 @@ export PATH=$PATH:${scripts_path}/bin
 . ${scripts_path}/Bash/.bash_aliases
 EOM
 chmod a+x ~/.bash_profile
+
+cp common/.vimrc ~/
