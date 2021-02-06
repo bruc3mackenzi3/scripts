@@ -6,7 +6,6 @@ alias ls='ls -G'
 alias la='ls -A'
 alias ll='ls -l'
 
-alias 'py=python'
 alias 'pyjson=python -m json.tool'
 alias 'mkcd=. mkcd'
 alias 'cdrm=. cdrm'
@@ -25,3 +24,8 @@ alias 'glg=git log'
 alias 'gsl=git stash list'
 alias 'gsp=git stash pop'
 alias 'git_recent=git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short):"'
+
+# Shortform aliases
+alias 'd=docker'
+alias 'm=make'
+alias 'py=python'
