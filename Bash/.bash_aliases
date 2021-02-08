@@ -23,7 +23,7 @@ alias 'gpsh=git push'
 alias 'glg=git log'
 alias 'gsl=git stash list'
 alias 'gsp=git stash pop'
-alias 'git_recent=git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short):"'
+alias 'git_recent=git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)"'
 
 # Shortform aliases
 alias 'd=docker'
