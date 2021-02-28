@@ -1,0 +1,91 @@
+function aws_assume_profile() {
+    # https://github.com/kohofinancial/tools/blob/master/functions/aws_assume_profile.bash
+    unset AWS_ACCESS_KEY_ID
+    unset AWS_SECRET_ACCESS_KEY
+    unset AWS_SESSION_TOKEN
+
+    PROFILE=$1
+    if [[ $PROFILE == "" ]]
+    then
+        echo -n "profile? "
+        read -r PROFILE
+    fi
+
+    ROLE=$( aws configure get role_arn --profile "$PROFILE" )
+    if [[ $ROLE == "" ]]
+    then
+        echo "unable to find role_arn for $PROFILE"
+        return 1
+    fi
+
+    MFA_SERIAL=$( aws configure get mfa_serial --profile "$PROFILE" )
+    if [[ $MFA_SERIAL == "" ]]
+    then
+        echo "unable to find mfa_serial for $PROFILE"
+        return 1
+    fi
+
+    MFA_CODE=$2
+    if [[ $MFA_CODE == "" ]]
+    then
+        echo -n "mfa code for $MFA_SERIAL? "
+        read -r MFA_CODE
+    fi
+
+    AWS_RESPONSE="$(
+        aws sts assume-role \
+            --role-arn "$ROLE" \
+            --role-session-name "$PROFILE" \
+            --query 'Credentials.[AccessKeyId, SecretAccessKey, SessionToken]' \
+            --output text \
+            --serial-number "$MFA_SERIAL" \
+            --token-code "$MFA_CODE"
+    )"
+
+    IFS=$'\t' read -ra AWS_CREDENTIALS <<< "$AWS_RESPONSE"
+    if [[ "${#AWS_CREDENTIALS[@]}" != 3 ]]
+    then
+        echo "failed to get/parse temporary aws credentials"
+        return 1
+    fi
+
+    EXPORT_ARGS=(
+        "AWS_ACCESS_KEY_ID=${AWS_CREDENTIALS[0]}"
+        "AWS_SECRET_ACCESS_KEY=${AWS_CREDENTIALS[1]}"
+        "AWS_SESSION_TOKEN=${AWS_CREDENTIALS[2]}"
+    )
+    if ! export "${EXPORT_ARGS[@]}"
+    then
+        echo "failed to export arguments"
+        echo "${EXPORT_ARGS[@]}"
+        return 1
+    fi
+
+    echo "role $PROFILE assumed"
+    return 0
+}
+
+function get_pg_password() {
+    DB_ENV=$1
+
+    if [[ $DB_ENV == "kohoapi-read-prod" ]]
+    then
+        export RDSHOST="postgres-9-6-prod-v2-replica.csjphcki1km6.us-west-2.rds.amazonaws.com"
+        export USER="koho_reader"
+        export DBNAME="koho"
+        export ROLE="kohoapi-read-prod"
+    elif [[ $DB_ENV == "kohoapi-sandbox" ]]
+    then
+        export RDSHOST="kohoapi-sandbox.cxjg1fdxhsr5.us-west-2.rds.amazonaws.com"
+        export USER="koho_reader"
+        export DBNAME="koho"
+        export ROLE="kohoapi-sandbox"
+    else
+        1>&2 echo "Error: environment $DB_ENV not recognized"
+        return 1
+    fi
+
+    # Prompts for MFA code
+    aws_assume_profile $DB_ENV && \
+    aws rds generate-db-auth-token --hostname $RDSHOST --port 5432 --region us-west-2 --username $USER
+}
