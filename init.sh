@@ -10,14 +10,37 @@ if [[ "$env" == "Darwin" ]]; then
     OSX/init.sh
 fi
 
-ln -s $scripts_path/bash/ ~/.profiles
+# Create symlink pointing ~/.profiles to repo folder
+ln -s ${scripts_path}/bash ~/.profiles
 
-# Create ~/.bash_profile pointing to custom .bash_profile
-cat > ~/.bash_profile <<- EOM
+# Initialize ~/.bash_profile pointing to custom .bash_profile
+read -r -d '' BASHH_PROFILE << EOM
 export PATH=\$PATH:${scripts_path}/bin
 . ~/.profiles/.bash_profile
 . ~/.profiles/.bash_aliases
 EOM
+
+CHOICE="none"
+if [ -f ~/.bash_profile ]; then
+    echo ".bash_profile exists. [o]verwrite, [a]ppend, or [c]ancel?"
+    read CHOICE
+fi
+
+if [[ $CHOICE == "c" ]]; then
+    exit 1
+elif [[ $CHOICE == "o" || $CHOICE == "none" ]]; then
+    cat > ~/.bash_profile <<- EOM
+    $BASHH_PROFILE
+EOM
+elif [[ $CHOICE == "a" ]]; then
+    cat >> ~/.bash_profile <<- EOM
+    $BASHH_PROFILE
+EOM
+else
+    1>&2 echo "Error: invalid option $CHOICE"
+    exit 1
+fi
+
 chmod a+x ~/.bash_profile
 
 cp common/.vimrc ~/
