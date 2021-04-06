@@ -46,4 +46,5 @@ chmod a+x ~/.bash_profile
 cp common/.vimrc ~/
 
 # Configure git
+git config --global url."ssh://git@github.com/".insteadOf "https://github.com/"
 git config --global pull.ff only

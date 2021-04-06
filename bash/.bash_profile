@@ -1,12 +1,19 @@
 # Bash prompt
-export PS1='\[\e[0;34m\][\u \W]$ \[\e[0m\]'
+export PS1='\[\033[01;32m\]\u \[\033[00m\]\[\033[01;34m\]\w\[\033[00m\]\$ '
 
 
-############
+#############
 # osx_profile
 #############
 # Silence "default interactive shell is now zsh" warning
 export BASH_SILENCE_DEPRECATION_WARNING=1
+
+# PostgreSQL psql command
+PSQL_PATH="/usr/local/Cellar/libpq/13.2/bin/"
+if [[ -d $PSQL_PATH ]]
+then
+    export PATH="$PATH:$PSQL_PATH"
+fi
 
 # Enable git auto-completion - https://apple.stackexchange.com/a/336997
 [ -f /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash ] && . /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash
@@ -27,25 +34,15 @@ export GOROOT=$(go env GOROOT)
 export GOPRIVATE="github.com/kohofinancial"
 export GO111MODULE=on  # for enabling Go Modules on older Go versions
 
+export PATH="$PATH:$GOPATH/bin"
 # For multiple go versions
-#export PATH="$PATH:$GOPATH/bin"
 #alias 'go=go<version>'
 
 
 ##############
 # KOHO Profile
 ##############
-# Koho API stuff
-# For fixing Docker when it's in a bad state
-alias d_nuke='docker kill $(docker ps -q); docker container prune -f && docker rmi -f $(docker images -qa) && docker volume prune -f && docker network prune -f'
-alias d_logs='docker logs -n 10 -f koho_accounts-api_1 | jq .msg'
-
-# Print available AWS Role Profiles
-alias 'aws_profiles=egrep "^\[.+\]$" ~/.aws/config | awk -F"[\\\\[\\\\]]" "{print \$2}" | awk -F" " "{print \$NF}"'
-
-alias 'ap=aws_profiles'
-alias 'aap=aws_assume_profile'
-alias 'pgp=get_pg_password'
+. ~/.profiles/.koho_profile
 
 # Project-specific environments
 #currentProject="helloworld"
