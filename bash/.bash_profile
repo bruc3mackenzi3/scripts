@@ -1,5 +1,6 @@
 # Bash prompt
 export PS1='\[\033[01;32m\]\u \[\033[00m\]\[\033[01;34m\]\w\[\033[00m\]\$ '
+export CLICOLOR=1  # enables color output for ls command
 
 
 #############
@@ -31,6 +32,7 @@ alias 'pydoc=pydoc3'
 # For convenience
 export GOPATH=$(go env GOPATH)
 export GOROOT=$(go env GOROOT)
+
 export GOPRIVATE="github.com/kohofinancial"
 export GO111MODULE=on  # for enabling Go Modules on older Go versions
 
@@ -43,10 +45,3 @@ export PATH="$PATH:$GOPATH/bin"
 # KOHO Profile
 ##############
 . ~/.profiles/.koho_profile
-
-# Project-specific environments
-#currentProject="helloworld"
-if [ "$currentProject" == "helloworld" ]
-then
-    cd $GOPATH/src/github.com/bruce-koho/helloworldservice
-fi

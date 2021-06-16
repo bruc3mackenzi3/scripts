@@ -2,7 +2,6 @@
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
-alias ls='ls -G'
 alias la='ls -A'
 alias ll='ls -l'
 
@@ -27,5 +26,6 @@ alias 'git_recent=git for-each-ref --count=30 --sort=-committerdate refs/heads/ 
 
 # Shortform aliases
 alias 'd=docker'
+alias "d_name=docker ps --format '{{.Names}}' | sort"  # list only names of Docker containers
 alias 'm=make'
 alias 'py=python'

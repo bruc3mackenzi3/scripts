@@ -1,4 +1,16 @@
-export DEFAULT_KOHO_API_SERVICE="accounts-api"
+#!/bin/bash
+
+####
+# AWS stuff
+####
+# https://github.com/kohofinancial/documentation/blob/master/onboarding/How-Tos/RDS%20Connection.md
+
+# Print available AWS Role Profiles
+alias 'aws_profiles=egrep "^\[.+\]$" ~/.aws/config | awk -F"[\\\\[\\\\]]" "{print \$2}" | awk -F" " "{print \$NF}"'
+
+alias 'ap=aws_profiles'
+alias 'aap=. aws_assume_profile'
+alias 'pgp=get_pg_password'
 
 function get_pg_password() {
     DB_ENV=$1
@@ -16,12 +28,17 @@ function get_pg_password() {
     elif [[ $DB_ENV == "processors-read-prod" ]]
     then
         export RDSHOST="processors-prod.csjphcki1km6.us-west-2.rds.amazonaws.com"
-        export USER="processors_reader"
+        export USER="koho_reader"
         export DBNAME="processors"
     elif [[ $DB_ENV == "processors-read-sandbox" ]]
     then
         export RDSHOST="processors-sandbox.cxjg1fdxhsr5.us-west-2.rds.amazonaws.com"
-        export USER="processors_reader"
+        export USER="processors_script_runner"
+        export DBNAME="processors"
+    elif [[ $DB_ENV == "processors-admin-sandbox" ]]
+    then
+        export RDSHOST="processors-sandbox.cxjg1fdxhsr5.us-west-2.rds.amazonaws.com"
+        export USER="processors_script_runner"
         export DBNAME="processors"
     elif [[ $DB_ENV == "processors-read-staging" ]]
     then
@@ -40,7 +57,7 @@ function get_pg_password() {
     fi
 
     # Prompts for MFA code
-    . aws_assume_profile --clean --profile tideteam && \
+    . aws_assume_profile --clean --profile tide && \
     . aws_assume_profile --profile $DB_ENV && \
     export PGPASSWORD=$(aws rds generate-db-auth-token --hostname $RDSHOST --port 5432 --region us-west-2 --username $USER) && \
     echo $PGPASSWORD
@@ -56,13 +73,15 @@ function d_logs() {
     docker logs -n 10 -f koho_${SERVICE}_1 | jq .msg
 }
 
+####
 # Koho API stuff
+####
 # For fixing Docker when it's in a bad state
 alias 'd_nuke=docker kill $(docker ps -q); docker container prune -f && docker rmi -f $(docker images -qa) && docker volume prune -f && docker network prune -f'
 
-# Print available AWS Role Profiles
-alias 'aws_profiles=egrep "^\[.+\]$" ~/.aws/config | awk -F"[\\\\[\\\\]]" "{print \$2}" | awk -F" " "{print \$NF}"'
+# Prevent timeout errors on make start
+export DOCKER_CLIENT_TIMEOUT=120
+export COMPOSE_HTTP_TIMEOUT=120
 
-alias 'ap=aws_profiles'
-alias 'aap=. aws_assume_profile'
-alias 'pgp=get_pg_password'
+export DEFAULT_SERVICE="koho_accounts-api_1"
+alias d_logs='docker logs -f $DEFAULT_SERVICE 2> /dev/null'
