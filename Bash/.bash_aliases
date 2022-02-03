@@ -10,7 +10,6 @@ alias 'mkcd=. mkcd'
 alias 'cdrm=. cdrm'
 
 # Git aliases
-alias 'gh=git help'
 alias 'gst=git status'
 alias 'gbr=git branch'
 alias 'gco=git checkout'
@@ -27,5 +26,6 @@ alias 'git_recent=git for-each-ref --count=30 --sort=-committerdate refs/heads/ 
 # Shortform aliases
 alias 'd=docker'
 alias "d_name=docker ps --format '{{.Names}}' | sort"  # list only names of Docker containers
+alias "d_port=docker ps --format '{{.Names}} {{.Ports}}' | sort"  # names & ports
 alias 'm=make'
 alias 'py=python'

@@ -4,7 +4,7 @@ export CLICOLOR=1  # enables color output for ls command
 
 
 #############
-# osx_profile
+# OSX profile
 #############
 # Silence "default interactive shell is now zsh" warning
 export BASH_SILENCE_DEPRECATION_WARNING=1
@@ -27,18 +27,23 @@ alias 'pydoc=pydoc3'
 
 
 ############
-# go_profile
+# GO profile
 ############
+# For multiple go versions
+export PATH="/usr/local/go/bin:$PATH"  # go1.15.12
+#export PATH="/Users/bruce/sdk/go1.17.2/bin/:$PATH"
+
 # For convenience
-export GOPATH=$(go env GOPATH)
-export GOROOT=$(go env GOROOT)
+# Note: including these was breaking the environment, causing mismatched Go versions
+# export GOPATH=$(go env GOPATH)
+# export GOROOT=$(go env GOROOT)
+# export PATH="$PATH:$GOPATH/bin"
 
 export GOPRIVATE="github.com/kohofinancial"
 export GO111MODULE=on  # for enabling Go Modules on older Go versions
 
-export PATH="$PATH:$GOPATH/bin"
-# For multiple go versions
-#alias 'go=go<version>'
+
+echo "Note: Running Go version: $(go version)"
 
 
 ##############

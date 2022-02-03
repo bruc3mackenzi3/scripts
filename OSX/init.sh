@@ -10,7 +10,7 @@ echo "DEBUG: Running OSX/init.sh"
 defaults write com.apple.Finder AppleShowAllFiles YES
 
 
-# Installs lateste version of make
+# Installs latest version of make
 # Note: installs as gmake, as per Brew instructions add to PATH
 if ! command -v gmake &> /dev/null
 then
@@ -18,3 +18,11 @@ then
     # pass this up to parent to add to bash_profile set PATH command
     BASH_PREFIXES=$BASH_PREFIXES"/usr/local/opt/make/libexec/gnubin:"
 fi
+
+# GNU coreutils tools, e.g. includes shuf
+# Installs commands with 'g' prefix, call regular names with PATH modification
+# https://formulae.brew.sh/formula/coreutils
+brew install coreutils && \
+PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
+
+brew install wget
