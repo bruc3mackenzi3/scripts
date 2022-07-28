@@ -8,7 +8,7 @@ scripts_path=$PWD
 
 # Executable paths to prepend and append to PATH
 PATH_PREFIXES=""  # always end with :
-PATH_SUFFIXES=":${scripts_path}/bin"  # always begin with :
+PATH_SUFFIXES=""  # always begin with :
 
 # Run system-specific initialization
 env=$(uname)
@@ -16,16 +16,17 @@ if [[ "$env" == "Darwin" ]]; then
     . OSX/init.sh
 fi
 
-# Create symlink pointing ~/.profiles to repo folder
-ln -s ${scripts_path}/bash ~/.profiles
+# copy files to home directory; NOTE this overwrites previous copy
+mkdir -p ~/.profiles/ && cp bash/* ~/.profiles/
+cp bin/* ~/bin/
 
-# Initialize ~/.bash_profile pointing to custom .bash_profile
 read -r -d '' BASH_PROFILE << EOM
 export PATH=\$PATH_PREFIXES\$PATH\$PATH_SUFFIXES
-. ~/.profiles/.bash_profile
-. ~/.profiles/.bash_aliases
+. ~/.profiles/profile.sh
+. ~/.profiles/aliases.sh
 EOM
 
+# Initialize ~/.bash_profile pointing to custom .bash_profile
 CHOICE="none"
 if [ -f ~/.bash_profile ]; then
     echo ".bash_profile exists. [o]verwrite, [a]ppend, or [c]ancel?"
@@ -46,7 +47,6 @@ else
     1>&2 echo "Error: invalid option $CHOICE"
     exit 1
 fi
-
 chmod a+x ~/.bash_profile
 
 cp common/.vimrc ~/
