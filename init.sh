@@ -7,8 +7,8 @@ echo "DEBUG: Running init.sh"
 scripts_path=$PWD
 
 # Executable paths to prepend and append to PATH
-PATH_PREFIXES=""  # always end with :
-PATH_SUFFIXES=""  # always begin with :
+PATH_PREFIX=""  # always end with :
+PATH_SUFFIX=":$HOME/bin/"  # always begin with :
 
 # Run system-specific initialization
 env=$(uname)
@@ -21,7 +21,7 @@ mkdir -p ~/.profiles/ && cp bash/* ~/.profiles/
 cp bin/* ~/bin/
 
 read -r -d '' BASH_PROFILE << EOM
-export PATH=\$PATH_PREFIXES\$PATH\$PATH_SUFFIXES
+export PATH=$PATH_PREFIX\$PATH$PATH_SUFFIX
 . ~/.profiles/profile.sh
 . ~/.profiles/aliases.sh
 EOM
