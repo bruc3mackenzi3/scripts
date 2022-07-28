@@ -20,7 +20,7 @@ fi
 ln -s ${scripts_path}/bash ~/.profiles
 
 # Initialize ~/.bash_profile pointing to custom .bash_profile
-read -r -d '' BASHH_PROFILE << EOM
+read -r -d '' BASH_PROFILE << EOM
 export PATH=\$PATH_PREFIXES\$PATH\$PATH_SUFFIXES
 . ~/.profiles/.bash_profile
 . ~/.profiles/.bash_aliases
@@ -36,11 +36,11 @@ if [[ $CHOICE == "c" ]]; then
     exit 1
 elif [[ $CHOICE == "o" || $CHOICE == "none" ]]; then
     cat > ~/.bash_profile <<- EOM
-    $BASHH_PROFILE
+    $BASH_PROFILE
 EOM
 elif [[ $CHOICE == "a" ]]; then
     cat >> ~/.bash_profile <<- EOM
-    $BASHH_PROFILE
+    $BASH_PROFILE
 EOM
 else
     1>&2 echo "Error: invalid option $CHOICE"
