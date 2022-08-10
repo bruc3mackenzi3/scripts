@@ -26,10 +26,10 @@ alias 'git_recent=git for-each-ref --count=30 --sort=-committerdate refs/heads/ 
 
 # Shortform aliases
 alias 'd=docker'
+alias 'dc=docker compose'
 alias 'm=make'
-alias 'py=python'
 
 alias "dname=docker ps --format '{{.Names}}' | sort"  # list only names of Docker containers
 alias "dps=docker ps --format '{{.Names}} {{.Ports}}' | sort"  # names & ports
 # For fixing Docker when it's in a bad state
-alias 'd_nuke=docker kill $(docker ps -q); docker container prune -f && docker rmi -f $(docker images -qa) && docker volume prune -f && docker network prune -f'
+alias 'dnuke=docker kill $(docker ps -q); docker container prune -f && docker rmi -f $(docker images -qa) && docker volume prune -f && docker network prune -f'

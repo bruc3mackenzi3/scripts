@@ -25,11 +25,6 @@ fi
 ########
 # Python
 ########
-# Default to Python 3
-alias 'python=python3'
-alias 'pip=pip3'
-alias 'python-config=python3-config'
-alias 'pydoc=pydoc3'
 
 # Enable Python virtual environment, creating first if it doesn't exist
 function enable_python_venv {
@@ -50,10 +45,3 @@ function enable_python_venv {
 #export PATH="/Users/bruce/sdk/go1.17.2/bin/:$PATH"
 
 export GOPRIVATE="github.com/bruc3mackenzi3"
-
-# For convenience
-# Note: including these was breaking the environment, causing mismatched Go versions
-# export GOPATH=$(go env GOPATH)
-# export GOROOT=$(go env GOROOT)
-# export PATH="$PATH:$GOPATH/bin"
-# export GO111MODULE=on  # for enabling Go Modules on older Go versions

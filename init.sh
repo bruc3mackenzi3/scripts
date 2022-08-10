@@ -2,8 +2,6 @@
 
 # Note: Run from repo root directory
 
-echo "DEBUG: Running init.sh"
-
 scripts_path=$PWD
 
 # Executable paths to prepend and append to PATH
