@@ -27,6 +27,7 @@ alias 'git_recent=git for-each-ref --count=30 --sort=-committerdate refs/heads/ 
 # Shortform aliases
 alias 'd=docker'
 alias 'dc=docker compose'
+alias 'k=kubectl'
 alias 'm=make'
 
 alias "dname=docker ps --format '{{.Names}}' | sort"  # list only names of Docker containers
