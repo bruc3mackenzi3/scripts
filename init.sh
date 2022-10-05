@@ -65,3 +65,8 @@ git config --global pull.ff only
 
 # Set global gitignote
 git config --global core.excludesfile ~/.gitignore_global
+
+# SSH
+if [ ! -f ~/.ssh/id_rsa ]; then
+    echo "Warning: SSH private key file missing.  You may need to setup SSH keys."
+fi
