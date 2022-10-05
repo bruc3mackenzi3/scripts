@@ -1,12 +1,11 @@
 #!/bin/bash
 
 # Note: Run from repo root directory
-
-scripts_path=$PWD
+# Note: May require running as sudo for copying to /usr/local/bin
 
 # Executable paths to prepend and append to PATH
 PATH_PREFIX=""  # always end with :
-PATH_SUFFIX=":$HOME/bin/"  # always begin with :
+PATH_SUFFIX=""  # always begin with :
 
 # Run system-specific initialization
 env=$(uname)
@@ -16,8 +15,9 @@ fi
 
 # copy files to home directory; NOTE this overwrites previous copy
 mkdir -p ~/.profiles/ && cp bash/* ~/.profiles/
-cp bin/* ~/bin/
+cp bin/* /usr/local/bin/
 
+# Multiline string containing script we'll add to .bash_profile
 read -r -d '' BASH_PROFILE << EOM
 export PATH=$PATH_PREFIX\$PATH$PATH_SUFFIX
 . ~/.profiles/profile.sh
@@ -27,7 +27,7 @@ EOM
 # Initialize ~/.bash_profile pointing to custom .bash_profile
 CHOICE="none"
 if [ -f ~/.bash_profile ]; then
-    echo ".bash_profile exists. [o]verwrite, [a]ppend, or [c]ancel?"
+    echo ".bash_profile exists. [o]verwrite, [a]ppend, [s]kip, or [c]ancel?"
     read CHOICE
 fi
 
@@ -41,6 +41,8 @@ elif [[ $CHOICE == "a" ]]; then
     cat >> ~/.bash_profile <<- EOM
     $BASH_PROFILE
 EOM
+elif [[ $CHOICE == "s" ]]; then
+    echo "Skipping"
 else
     1>&2 echo "Error: invalid option $CHOICE"
     exit 1
@@ -52,6 +54,9 @@ cp common/.vimrc ~/
 ####
 # Configure git
 ####
+git config --global user.email "mackenzbb@gmail.com"
+git config --global user.name "Bruce MacKenzie"
+
 # Default to ssh instead of HTTPS
 git config --global url."ssh://git@github.com/".insteadOf "https://github.com/"
 
