@@ -19,6 +19,9 @@ cp bin/* /usr/local/bin/
 
 # Multiline string containing script we'll add to .bash_profile
 read -r -d '' BASH_PROFILE << EOM
+# NOTE: This was added by Bruce's environment initializer script.
+# Changes to this file may be overwritten
+
 export PATH=$PATH_PREFIX\$PATH$PATH_SUFFIX
 . ~/.profiles/profile.sh
 . ~/.profiles/aliases.sh
@@ -35,11 +38,11 @@ if [[ $CHOICE == "c" ]]; then
     exit 1
 elif [[ $CHOICE == "o" || $CHOICE == "none" ]]; then
     cat > ~/.bash_profile <<- EOM
-    $BASH_PROFILE
+$BASH_PROFILE
 EOM
 elif [[ $CHOICE == "a" ]]; then
     cat >> ~/.bash_profile <<- EOM
-    $BASH_PROFILE
+$BASH_PROFILE
 EOM
 elif [[ $CHOICE == "s" ]]; then
     echo "Skipping"

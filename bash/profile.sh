@@ -25,7 +25,6 @@ fi
 ########
 # Python
 ########
-
 # Enable Python virtual environment, creating first if it doesn't exist
 function enable_python_venv {
     env_path="/c/Users/BMacK/.virtualenvs/default_env"
@@ -40,8 +39,9 @@ function enable_python_venv {
 ############
 # Go profile
 ############
-# For multiple go versions
-# export PATH="/usr/local/go/bin:$PATH"  # go1.15.12
-#export PATH="/Users/bruce/sdk/go1.17.2/bin/:$PATH"
+export PATH="/home/$USER/go/bin:$PATH"  # GOPATH
+
+# For multiple go versions add / toggle the GOROOT added to PATH
+export PATH="/usr/local/go-1.19/bin:$PATH"  # GOROOT
 
 export GOPRIVATE="github.com/bruc3mackenzi3"
