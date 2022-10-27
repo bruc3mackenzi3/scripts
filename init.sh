@@ -4,8 +4,11 @@
 # Note: May require running as sudo for copying to /usr/local/bin
 
 # Executable paths to prepend and append to PATH
-PATH_PREFIX=""  # always end with :
-PATH_SUFFIX=""  # always begin with :
+PATH_PREFIX="/opt/homebrew/opt/coreutils/libexec/gnubin/:"  # always end with :
+PATH_SUFFIX=":/opt/homebrew/bin/\
+:/opt/homebrew/Cellar/wget/1.21.3/bin/\
+:/opt/homebrew/Cellar/kubernetes-cli/1.25.3/bin/\
+:/opt/homebrew/Cellar/maven/3.8.6/bin/"  # always begin with :
 
 # Run system-specific initialization
 env=$(uname)
@@ -70,6 +73,6 @@ git config --global pull.ff only
 git config --global core.excludesfile ~/.gitignore_global
 
 # SSH
-if [ ! -f ~/.ssh/id_rsa ]; then
+if [ ! -f ~/.ssh/id_rsa ] && [ ! -f ~/.ssh/id_ed25519 ]; then
     echo "Warning: SSH private key file missing.  You may need to setup SSH keys."
 fi

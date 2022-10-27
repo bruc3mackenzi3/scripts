@@ -42,6 +42,8 @@ function enable_python_venv {
 export PATH="/home/$USER/go/bin:$PATH"  # GOPATH
 
 # For multiple go versions add / toggle the GOROOT added to PATH
-export PATH="/usr/local/go-1.19/bin:$PATH"  # GOROOT
+#export PATH="/usr/local/go1.15.15/bin/:$PATH"  # GOROOT
+export PATH="/usr/local/go-1.19/bin/:$PATH"  # GOROOT
+echo -e "\nNOTE: Current active Go version is $(go version)\n"
 
 export GOPRIVATE="github.com/bruc3mackenzi3"
