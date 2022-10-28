@@ -11,13 +11,6 @@ if [[ "$env" == "Darwin" ]]; then
     # Silence "default interactive shell is now zsh" warning
     export BASH_SILENCE_DEPRECATION_WARNING=1
 
-    # PostgreSQL psql command
-    PSQL_PATH="/usr/local/Cellar/libpq/13.2/bin/"
-    if [[ -d $PSQL_PATH ]]
-    then
-        export PATH="$PATH:$PSQL_PATH"
-    fi
-
     # Enable git auto-completion - https://apple.stackexchange.com/a/336997
     [ -f /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash ] && . /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash
 fi
@@ -39,11 +32,17 @@ function enable_python_venv {
 ############
 # Go profile
 ############
-export PATH="/home/$USER/go/bin:$PATH"  # GOPATH
+export PATH="$(go env GOPATH)/bin:$PATH"  # GOPATH, note: instead consider doing PATH="$(go env GOPATH)/bin:$PATH"
 
-# For multiple go versions add / toggle the GOROOT added to PATH
-#export PATH="/usr/local/go1.15.15/bin/:$PATH"  # GOROOT
-export PATH="/usr/local/go-1.19/bin/:$PATH"  # GOROOT
+if [ -z "$GOPRIVATE" ]
+then
+    OLD_GOPRIVATE="$GOPRIVATE,"
+fi
+export GOPRIVATE="$OLD_GOPRIVATE\
+github.com/bruc3mackenzi3"
+
+# Switch to non-default version
+#alias 'go=go1.19'
+#alias 'go=go1.15'
+
 echo -e "\nNOTE: Current active Go version is $(go version)\n"
-
-export GOPRIVATE="github.com/bruc3mackenzi3"

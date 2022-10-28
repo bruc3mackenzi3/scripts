@@ -1,4 +1,4 @@
-VERSION="1.19"
+VERSION="1.17"
 OS=darwin
 ARCH=amd64
 INSTALL_PATH="/usr/local"

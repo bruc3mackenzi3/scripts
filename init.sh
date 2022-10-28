@@ -6,9 +6,7 @@
 # Executable paths to prepend and append to PATH
 PATH_PREFIX="/opt/homebrew/opt/coreutils/libexec/gnubin/:"  # always end with :
 PATH_SUFFIX=":/opt/homebrew/bin/\
-:/opt/homebrew/Cellar/wget/1.21.3/bin/\
-:/opt/homebrew/Cellar/kubernetes-cli/1.25.3/bin/\
-:/opt/homebrew/Cellar/maven/3.8.6/bin/"  # always begin with :
+:/opt/homebrew/Cellar/wget/1.21.3/bin/"  # always begin with :
 
 # Run system-specific initialization
 env=$(uname)
@@ -26,7 +24,8 @@ read -r -d '' BASH_PROFILE << EOM
 # Changes to this file may be overwritten
 
 export PATH=$PATH_PREFIX\$PATH$PATH_SUFFIX
-. ~/.profiles/profile.sh
+. ~/.profiles/main_profile.sh
+. ~/.profiles/quickplay_profile.sh
 . ~/.profiles/aliases.sh
 EOM
 
