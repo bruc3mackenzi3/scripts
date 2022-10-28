@@ -54,7 +54,7 @@ else
 fi
 chmod a+x ~/.bash_profile
 
-cp common/.vimrc ~/
+cp common/.gitignore_global common/.vimrc ~/
 
 ####
 # Configure git
