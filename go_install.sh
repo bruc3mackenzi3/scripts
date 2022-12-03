@@ -1,13 +1,15 @@
-VERSION="1.17"
+# https://go.dev/doc/manage-install
+
+VERSION="1.15"
 OS=darwin
-ARCH=amd64
+ARCH=arm64
 INSTALL_PATH="/usr/local"
 
 CHOICE="none"
 echo "Remove existing go installation(s), [y]es or [n]o?"
 read CHOICE
 if [[ $CHOICE == "y" ]]; then
-    sudo rm -rf /usr/local/go* && sudo rm -rf /usr/local/go
+    sudo rm -rf /usr/local/go* /usr/local/go /etc/paths.d/go ~/sdk/
 elif [[ $CHOICE != "n" ]]; then
     1>&2 echo "Invalid option \"$CHOICE\""
     exit 1

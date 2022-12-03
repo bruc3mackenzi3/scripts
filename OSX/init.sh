@@ -9,6 +9,9 @@ echo "DEBUG: Running OSX/init.sh"
 # https://knowledge.autodesk.com/support/smoke/troubleshooting/caas/sfdcarticles/sfdcarticles/How-to-view-hidden-system-folders-in-Mac-OS-X-s.html
 defaults write com.apple.Finder AppleShowAllFiles YES
 
+# Set default terminal to Bash
+chsh -s /bin/bash
+
 
 # Installs latest version of make
 # Note: installs as gmake, as per Brew instructions add to PATH

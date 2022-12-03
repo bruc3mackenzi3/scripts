@@ -22,11 +22,13 @@ alias 'gpsh=git push'
 alias 'glg=git log'
 alias 'gsl=git stash list'
 alias 'gsp=git stash pop'
+alias 'gitcp=git cherry-pick'
 alias 'git_recent=git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)"'
 
 # Shortform aliases
 alias 'd=docker'
 alias 'dc=docker compose'
+alias 'g=git'
 alias 'k=kubectl'
 alias 'm=make'
 

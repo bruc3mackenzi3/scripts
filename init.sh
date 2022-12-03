@@ -6,7 +6,7 @@
 # Executable paths to prepend and append to PATH
 PATH_PREFIX="/opt/homebrew/opt/coreutils/libexec/gnubin/:"  # always end with :
 PATH_SUFFIX=":/opt/homebrew/bin/\
-:/opt/homebrew/Cellar/wget/1.21.3/bin/"  # always begin with :
+:/opt/homebrew/Cellar/wget/1.21.3/bin/:$HOME/bin"  # always begin with :
 
 # Run system-specific initialization
 env=$(uname)
@@ -16,7 +16,7 @@ fi
 
 # copy files to home directory; NOTE this overwrites previous copy
 mkdir -p ~/.profiles/ && cp bash/* ~/.profiles/
-cp bin/* /usr/local/bin/
+mkdir -p $HOME/bin/ && cp bin/* $HOME/bin/
 
 # Multiline string containing script we'll add to .bash_profile
 read -r -d '' BASH_PROFILE << EOM
