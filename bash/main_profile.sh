@@ -1,6 +1,18 @@
+############
+# Global Profile
+############
 # Bash prompt
 export PS1='\[\033[01;32m\]\u \[\033[00m\]\[\033[01;34m\]\W\[\033[00m\]\$ '
 export CLICOLOR=1  # enables color output for ls command
+
+. ~/.profiles/quickplay_profile.sh
+. ~/.profiles/aliases.sh
+
+# Executable paths to prepend and append to PATH
+PATH_PREFIX="/opt/homebrew/opt/coreutils/libexec/gnubin/:"  # always end with :
+PATH_SUFFIX=":/opt/homebrew/bin/\
+:/opt/homebrew/Cellar/wget/1.21.3/bin/:$HOME/bin"  # always begin with :
+export PATH=$PATH_PREFIX$PATH$PATH_SUFFIX
 
 
 #############
@@ -14,6 +26,15 @@ if [[ "$env" == "Darwin" ]]; then
     # Enable git auto-completion - https://apple.stackexchange.com/a/336997
     [ -f /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash ] && . /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash
 fi
+
+
+############
+# WSL Profile
+############
+if [[ -n $WSLENV ]]; then
+    export WHOME="/mnt/c/Users/BMacK/"
+fi
+
 
 ########
 # Python

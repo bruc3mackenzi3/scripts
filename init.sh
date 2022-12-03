@@ -3,61 +3,71 @@
 # Note: Run from repo root directory
 # Note: May require running as sudo for copying to /usr/local/bin
 
-# Executable paths to prepend and append to PATH
-PATH_PREFIX="/opt/homebrew/opt/coreutils/libexec/gnubin/:"  # always end with :
-PATH_SUFFIX=":/opt/homebrew/bin/\
-:/opt/homebrew/Cellar/wget/1.21.3/bin/:$HOME/bin"  # always begin with :
+# Multiline string containing script we'll add to .bashrc
+read -r -d '' BASHRC << EOM
+################################################
+# NOTE: Below section added by Bruce's environment initializer script.
+# Changes to this file may be overwritten
+. ~/.profiles/main_profile.sh
+EOM
 
-# Run system-specific initialization
+####
+# Step 1 - Run system-specific initialization
+####
 env=$(uname)
 if [[ "$env" == "Darwin" ]]; then
     . OSX/init.sh
 fi
 
+####
+# Step 2 - Deploy files
+####
 # copy files to home directory; NOTE this overwrites previous copy
 mkdir -p ~/.profiles/ && cp bash/* ~/.profiles/
 mkdir -p $HOME/bin/ && cp bin/* $HOME/bin/
 
-# Multiline string containing script we'll add to .bash_profile
-read -r -d '' BASH_PROFILE << EOM
-# NOTE: This was added by Bruce's environment initializer script.
-# Changes to this file may be overwritten
-
-export PATH=$PATH_PREFIX\$PATH$PATH_SUFFIX
-. ~/.profiles/main_profile.sh
-. ~/.profiles/quickplay_profile.sh
-. ~/.profiles/aliases.sh
-EOM
-
-# Initialize ~/.bash_profile pointing to custom .bash_profile
-CHOICE="none"
-if [ -f ~/.bash_profile ]; then
-    echo ".bash_profile exists. [o]verwrite, [a]ppend, [s]kip, or [c]ancel?"
-    read CHOICE
-fi
-
-if [[ $CHOICE == "c" ]]; then
-    exit 1
-elif [[ $CHOICE == "o" || $CHOICE == "none" ]]; then
-    cat > ~/.bash_profile <<- EOM
-$BASH_PROFILE
-EOM
-elif [[ $CHOICE == "a" ]]; then
-    cat >> ~/.bash_profile <<- EOM
-$BASH_PROFILE
-EOM
-elif [[ $CHOICE == "s" ]]; then
-    echo "Skipping"
-else
-    1>&2 echo "Error: invalid option $CHOICE"
-    exit 1
-fi
-chmod a+x ~/.bash_profile
-
 cp common/.gitignore_global common/.vimrc ~/
 
 ####
-# Configure git
+# Step 3 - Link .bashrc to custom profiles
+####
+read -r -d '' BASHRC << EOM
+$BASHRC
+
+# End of automated environment initialization
+################################################
+EOM
+
+# Initialize ~/.bashrc pointing to custom .bashrc
+if grep -q "NOTE: Below section added by Bruce's environment initializer script" ~/.bashrc; then
+    echo ".bashrc already linked to custom environment; skipping"
+else
+    CHOICE="none"
+    if [ -f ~/.bashrc ]; then
+        echo ".bashrc exists. [o]verwrite, [a]ppend, or [c]ancel?"
+        read CHOICE
+    fi
+
+    if [[ $CHOICE == "c" ]]; then
+        exit 1
+    elif [[ $CHOICE == "o" || $CHOICE == "none" ]]; then
+        cat > ~/.bashrc <<- EOM
+$BASHRC
+EOM
+    elif [[ $CHOICE == "a" ]]; then
+        cat >> ~/.bashrc <<- EOM
+$BASHRC
+EOM
+    else
+        1>&2 echo "Error: invalid option $CHOICE"
+        exit 1
+    fi
+    chmod a+x ~/.bashrc
+fi
+
+
+####
+# Step 4 - Configure git
 ####
 git config --global user.email "mackenzbb@gmail.com"
 git config --global user.name "Bruce MacKenzie"
