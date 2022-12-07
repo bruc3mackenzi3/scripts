@@ -10,8 +10,7 @@ export CLICOLOR=1  # enables color output for ls command
 
 # Executable paths to prepend and append to PATH
 PATH_PREFIX="/opt/homebrew/opt/coreutils/libexec/gnubin/:"  # always end with :
-PATH_SUFFIX=":/opt/homebrew/bin/\
-:/opt/homebrew/Cellar/wget/1.21.3/bin/:$HOME/bin"  # always begin with :
+PATH_SUFFIX=":/opt/homebrew/bin/"  # always begin with :
 export PATH=$PATH_PREFIX$PATH$PATH_SUFFIX
 
 
