@@ -9,9 +9,9 @@ export CLICOLOR=1  # enables color output for ls command
 . ~/.profiles/aliases.sh
 
 # Executable paths to prepend and append to PATH
-PATH_PREFIX="/opt/homebrew/opt/coreutils/libexec/gnubin/:"  # always end with :
-PATH_SUFFIX=":/opt/homebrew/bin/"  # always begin with :
-export PATH=$PATH_PREFIX$PATH$PATH_SUFFIX
+# PATH_PREFIX=":"  # always end with :
+# PATH_SUFFIX=":"  # always begin with :
+# export PATH=$PATH_PREFIX$PATH$PATH_SUFFIX
 
 
 #############
@@ -24,6 +24,11 @@ if [[ "$env" == "Darwin" ]]; then
 
     # Enable git auto-completion - https://apple.stackexchange.com/a/336997
     [ -f /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash ] && . /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash
+
+    # Path entries
+    PATH_PREFIX="/opt/homebrew/opt/coreutils/libexec/gnubin/:"  # always end with :
+    PATH_SUFFIX=":/opt/homebrew/bin/"  # always begin with :
+    export PATH=$PATH_PREFIX$PATH$PATH_SUFFIX
 fi
 
 
