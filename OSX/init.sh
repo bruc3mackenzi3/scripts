@@ -41,3 +41,9 @@ then
     brew install wget && \
     echo -e "\n##########\nWARNING: Verify wget install location and add to PATH: /opt/homebrew/Cellar/wget/1.21.3/bin/\n##########"
 fi
+
+if ! command -v jq &> /dev/null
+then
+    echo -e "\n##########\nInstalling jq\n##########"
+    brew install jq
+fi
