@@ -27,5 +27,5 @@ This project attempts to be idempotent, meaning subsequent installs will produce
 
 ### TODO
 * Move init.sh, OSX/init.sh to init/ folder
-* Move PATH initialization from global to env-specific scope, i.e. remove OSX-specific paths from other environments
+* Break apart initialization into specific profiles, as profiles are
 * Make inclusion of `quickplay_profile.sh` conditional
