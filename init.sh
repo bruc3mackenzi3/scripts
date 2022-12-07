@@ -3,6 +3,24 @@
 # Note: Run from repo root directory
 # Note: May require running as sudo for copying to /usr/local/bin
 
+# Add command to make .bash_profile call .bashrc
+read -r -d '' BASH_PROFILE << EOM
+################################################
+# NOTE: Below section added by Bruce's environment initializer script.
+. ~/.bashrc
+EOM
+if [ ! -e ~/.bash_profile ]; then
+    cat > ~/.bash_profile <<- EOM
+$BASH_PROFILE
+EOM
+    chmod a+x ~/.bash_profile
+elif ! grep -q "NOTE: Below section added by Bruce's environment initializer script" ~/.bash_profile; then
+    cat > ~/.bash_profile <<- EOM
+$BASH_PROFILE
+EOM
+    chmod a+x ~/.bash_profile
+fi
+
 # Multiline string containing script we'll add to .bashrc
 read -r -d '' BASHRC << EOM
 ################################################
@@ -17,6 +35,8 @@ EOM
 env=$(uname)
 if [[ "$env" == "Darwin" ]]; then
     . OSX/init.sh
+else
+    git config --global user.email "mackenzbb@gmail.com"
 fi
 
 ####
@@ -38,8 +58,12 @@ $BASHRC
 ################################################
 EOM
 
-# Initialize ~/.bashrc pointing to custom .bashrc
-if grep -q "NOTE: Below section added by Bruce's environment initializer script" ~/.bashrc; then
+# Initialize ~/.bashrc, adding code to call custom bash profile
+if [ ! -e ~/.bashrc ]; then
+    cat > ~/.bashrc <<- EOM
+$BASHRC
+EOM
+elif grep -q "NOTE: Below section added by Bruce's environment initializer script" ~/.bashrc; then
     echo ".bashrc already linked to custom environment; skipping"
 else
     CHOICE="none"
@@ -69,7 +93,6 @@ fi
 ####
 # Step 4 - Configure git
 ####
-git config --global user.email "mackenzbb@gmail.com"
 git config --global user.name "Bruce MacKenzie"
 
 # Default to ssh instead of HTTPS

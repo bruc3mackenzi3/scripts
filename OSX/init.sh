@@ -3,8 +3,6 @@
 # Note: Run as sudo
 # Note: Run in current shell
 
-echo "DEBUG: Running OSX/init.sh"
-
 # Show hidden files by default
 # https://knowledge.autodesk.com/support/smoke/troubleshooting/caas/sfdcarticles/sfdcarticles/How-to-view-hidden-system-folders-in-Mac-OS-X-s.html
 defaults write com.apple.Finder AppleShowAllFiles YES
@@ -47,3 +45,5 @@ then
     echo -e "\n##########\nInstalling jq\n##########"
     brew install jq
 fi
+
+git config --global user.email "bruce.m@quickplay.com"
