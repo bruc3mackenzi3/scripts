@@ -8,7 +8,7 @@ if [ -z "$GOPRIVATE" ]
 then
     OLD_GOPRIVATE="$GOPRIVATE,"
 fi
-export GOPRIVATE="$OLD_GOPRIVATE\
+export GOPRIVATE="${OLD_GOPRIVATE}\
 github.com/fl-vod,\
 github.com/fl-vod-gcp,\
 github.com/fl-media,\

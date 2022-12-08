@@ -61,9 +61,10 @@ export PATH="$(go env GOPATH)/bin:$PATH"  # GOPATH, note: instead consider doing
 
 if [ -z "$GOPRIVATE" ]
 then
+    echo DEBUG GOPRIVATE not empty
     OLD_GOPRIVATE="$GOPRIVATE,"
 fi
-export GOPRIVATE="$OLD_GOPRIVATE\
+export GOPRIVATE="${OLD_GOPRIVATE}\
 github.com/bruc3mackenzi3"
 
 # Switch to non-default version
