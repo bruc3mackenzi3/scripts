@@ -1,3 +1,11 @@
+_DEBUG=off
+function _print_debug() {
+    if [ "$_DEBUG" == "on" ]; then
+        echo $@
+    fi
+}
+_print_debug "Entering main_profile.sh ..."
+
 ############
 # Global Profile
 ############
@@ -9,9 +17,9 @@ export CLICOLOR=1  # enables color output for ls command
 . ~/.profiles/aliases.sh
 
 # Executable paths to prepend and append to PATH
-# PATH_PREFIX=":"  # always end with :
-# PATH_SUFFIX=":"  # always begin with :
-# export PATH=$PATH_PREFIX$PATH$PATH_SUFFIX
+# _PATH_PREFIX=":"  # always end with :
+# _PATH_SUFFIX=":"  # always begin with :
+# export PATH=$_PATH_PREFIX$PATH$_PATH_SUFFIX
 
 
 #############
@@ -26,9 +34,9 @@ if [[ "$env" == "Darwin" ]]; then
     [ -f /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash ] && . /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash
 
     # Path entries
-    PATH_PREFIX="/opt/homebrew/opt/coreutils/libexec/gnubin/:"  # always end with :
-    PATH_SUFFIX=":/opt/homebrew/bin/"  # always begin with :
-    export PATH=$PATH_PREFIX$PATH$PATH_SUFFIX
+    _PATH_PREFIX="/opt/homebrew/opt/coreutils/libexec/gnubin/:"  # always end with :
+    _PATH_SUFFIX=":/opt/homebrew/bin/"  # always begin with :
+    export PATH=$_PATH_PREFIX$PATH$_PATH_SUFFIX
 fi
 
 
@@ -59,12 +67,11 @@ function enable_python_venv {
 ############
 export PATH="$(go env GOPATH)/bin:$PATH"  # GOPATH, note: instead consider doing PATH="$(go env GOPATH)/bin:$PATH"
 
-if [ -z "$GOPRIVATE" ]
+if [ -n "$GOPRIVATE" ]
 then
-    echo DEBUG GOPRIVATE not empty
-    OLD_GOPRIVATE="$GOPRIVATE,"
+    _OLD_GOPRIVATE="$GOPRIVATE,"
 fi
-export GOPRIVATE="${OLD_GOPRIVATE}\
+export GOPRIVATE="${_OLD_GOPRIVATE}\
 github.com/bruc3mackenzi3"
 
 # Switch to non-default version
@@ -72,3 +79,10 @@ github.com/bruc3mackenzi3"
 #alias 'go=go1.15'
 
 echo -e "\nNOTE: Current active Go version is $(go version)\n"
+
+_print_debug "... exiting main_profile.sh"
+unset _DEBUG
+unset _print_debug
+unset _PATH_PREFIX
+unset _PATH_SUFFIX
+unset _OLD_GOPRIVATE

@@ -1,3 +1,5 @@
+_print_debug "Entering aliases.sh ..."
+
 # Shell aliases
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
@@ -36,3 +38,5 @@ alias "dname=docker ps --format '{{.Names}}' | sort"  # list only names of Docke
 alias "dps=docker ps --format '{{.Names}} {{.Ports}}' | sort"  # names & ports
 # For fixing Docker when it's in a bad state
 alias 'dnuke=docker kill $(docker ps -q); docker container prune -f && docker rmi -f $(docker images -qa) && docker volume prune -f && docker network prune -f'
+
+_print_debug "... exiting aliases.sh"
