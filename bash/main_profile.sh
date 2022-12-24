@@ -86,3 +86,12 @@ unset _print_debug
 unset _PATH_PREFIX
 unset _PATH_SUFFIX
 unset _OLD_GOPRIVATE
+
+
+####################
+# Kubernetes Profile
+####################
+alias 'k=kubectl'
+
+# Enable autocompletion
+source <(kubectl completion bash | sed s/kubectl/k/g)
