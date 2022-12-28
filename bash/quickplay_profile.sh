@@ -14,6 +14,7 @@ export GOPRIVATE="${_OLD_GOPRIVATE}\
 github.com/fl-vod,\
 github.com/fl-vod-gcp,\
 github.com/fl-media,\
+github.com/fl-media-gcp,\
 github.com/fl-edge-service"
 
 _print_debug "... exiting quickplay_profile.sh"

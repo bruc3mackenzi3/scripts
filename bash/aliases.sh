@@ -33,6 +33,7 @@ alias 'dc=docker compose'
 alias 'g=git'
 alias 'k=kubectl'
 alias 'm=make'
+alias `py=python3`
 
 alias "dname=docker ps --format '{{.Names}}' | sort"  # list only names of Docker containers
 alias "dps=docker ps --format '{{.Names}} {{.Ports}}' | sort"  # names & ports

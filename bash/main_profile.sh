@@ -17,9 +17,9 @@ export CLICOLOR=1  # enables color output for ls command
 . ~/.profiles/aliases.sh
 
 # Executable paths to prepend and append to PATH
-# _PATH_PREFIX=":"  # always end with :
-# _PATH_SUFFIX=":"  # always begin with :
-# export PATH=$_PATH_PREFIX$PATH$_PATH_SUFFIX
+_PATH_PREFIX=":"  # always end with :
+_PATH_SUFFIX=":$HOME/bin"  # always begin with :
+export PATH=$_PATH_PREFIX$PATH$_PATH_SUFFIX
 
 
 #############
