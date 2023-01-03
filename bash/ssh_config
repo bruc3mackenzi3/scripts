@@ -1,0 +1,8 @@
+# Instructions on configuring GitHub access with multiple accounts using SSH:
+# https://www.freecodecamp.org/news/manage-multiple-github-accounts-the-ssh-way-2dadc30ccaca/
+
+# Personal GitHub account
+Host github.com_personal
+   HostName github.com
+   User git
+   IdentityFile ~/.ssh/id_rsa_github

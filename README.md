@@ -29,3 +29,4 @@ This project attempts to be idempotent, meaning subsequent installs will produce
 * Move init.sh, OSX/init.sh to init/ folder
 * Break apart initialization into specific profiles, as profiles are
 * Make inclusion of `quickplay_profile.sh` conditional
+* Automate initialization of .ssh/config
