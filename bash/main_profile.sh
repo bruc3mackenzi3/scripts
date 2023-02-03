@@ -35,7 +35,8 @@ if [[ "$env" == "Darwin" ]]; then
 
     # Path entries
     _PATH_PREFIX="/opt/homebrew/opt/coreutils/libexec/gnubin/:"  # always end with :
-    _PATH_SUFFIX=":/opt/homebrew/bin/"  # always begin with :
+    _PATH_SUFFIX=":/opt/homebrew/bin/:"  # always begin with :
+    _PATH_SUFFIX=$_PATH_SUFFIX":/opt/homebrew/opt/libpq/bin"
     export PATH=$_PATH_PREFIX$PATH$_PATH_SUFFIX
 fi
 
@@ -88,6 +89,23 @@ alias 'k=kubectl'
 
 # Enable autocompletion
 source <(kubectl completion bash | sed s/kubectl/k/g)
+
+
+####
+# Helpers
+####
+# b64 provides a convenient interface for base64 ENCODING text with the command of the same
+base() {
+    # "$@" expands positional arguments into separate arguments, e.g. "$1" "$2"
+    echo -n "$@" | base64
+}
+
+# b64d provides a convenient interface for base64 DECODING text with the command of the same
+based() {
+    echo -n "$@" | base64 -d
+    echo -e
+}
+
 
 ####
 # Cleanup
