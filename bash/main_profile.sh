@@ -106,6 +106,20 @@ based() {
     echo -e
 }
 
+# mkdir followed by cd
+mkcd() {
+    # check for arguments passed
+    if [ $# -ne 1 ]; then
+        echo "mkcd: missing folder name" 1>&2
+        echo "Usage: mkcd FOLDER" 1>&2
+        echo "Create a folder and cd to it in one command" 1>&2
+    else
+        mkdir $1
+        cd $1
+    fi
+}
+
+
 
 ####
 # Cleanup

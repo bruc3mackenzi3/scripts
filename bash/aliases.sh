@@ -8,7 +8,6 @@ alias la='ls -A'
 alias ll='ls -l'
 
 alias 'pyjson=python -m json.tool'
-alias 'mkcd=. mkcd'
 alias 'cdrm=. cdrm'
 
 
