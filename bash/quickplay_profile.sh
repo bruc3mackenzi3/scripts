@@ -16,6 +16,7 @@ github.com/fl-vod,\
 github.com/fl-vod-gcp,\
 github.com/fl-media,\
 github.com/fl-media-gcp,\
-github.com/fl-edge-service"
+github.com/fl-edge-service,\
+github.com/univ-edge"
 
 _print_debug "... exiting quickplay_profile.sh"
