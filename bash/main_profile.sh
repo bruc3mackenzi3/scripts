@@ -96,14 +96,17 @@ source <(kubectl completion bash | sed s/kubectl/k/g)
 ####
 # b64 provides a convenient interface for base64 ENCODING text with the command of the same
 base() {
-    # "$@" expands positional arguments into separate arguments, e.g. "$1" "$2"
-    echo -n "$@" | base64
+    # $@ copies positional parameters verbatim
+    echo -n $@ | base64
 }
 
 # b64d provides a convenient interface for base64 DECODING text with the command of the same
 based() {
-    echo -n "$@" | base64 -d
-    echo -e
+    for arg in $@
+    do
+        echo -n $arg | base64 -d
+        echo -e
+    done
 }
 
 # mkdir followed by cd
