@@ -41,9 +41,17 @@ if [[ "$env" == "Darwin" ]]; then
 fi
 
 
-############
+#########
+# Windows
+#########
+if [[ $OS == "Windows_NT" ]]; then
+    . ~/.profiles/windows_profile.sh
+fi
+
+
+#############
 # WSL Profile
-############
+#############
 if [[ -n $WSLENV ]]; then
     export WHOME="/mnt/c/Users/BMacK/"
 fi

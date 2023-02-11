@@ -1,0 +1,1 @@
+alias 'hut=hut.exe'
