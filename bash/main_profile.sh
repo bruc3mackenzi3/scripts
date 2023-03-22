@@ -76,10 +76,11 @@ export GOPRIVATE="${_OLD_GOPRIVATE}\
 github.com/bruc3mackenzi3"
 
 # Switch to non-default version
-#alias 'go=go1.19'
-#alias 'go=go1.15'
+#alias 'go=go1.19.4'
+#alias 'go=go1.15.15'
 
-echo -e "\nNOTE: Current active Go version is $(go version)\n"
+go_versions=$(cd ~/go/bin/ && ls go*.*)
+echo -e \\nNOTE: Current active Go version is $(go version)\\nOther Go versions available: $go_versions\\n
 
 
 ####################
