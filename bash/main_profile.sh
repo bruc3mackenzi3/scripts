@@ -49,6 +49,27 @@ if [[ -n $WSLENV ]]; then
 fi
 
 
+############
+# Go profile
+############
+#export PATH="$(go env GOPATH)/bin:$PATH"
+export PATH="/Users/brucem/sdk/go1.19.4/bin/:$PATH"
+
+# Switch to non-default version
+#alias 'go=go1.19.4'  # /Users/brucem/sdk/go1.19.4/bin/go
+# alias 'go=go1.15.15'
+
+if [ -n "$GOPRIVATE" ]
+then
+    _OLD_GOPRIVATE="$GOPRIVATE,"
+fi
+export GOPRIVATE="${_OLD_GOPRIVATE}\
+github.com/bruc3mackenzi3"
+
+go_versions=$(cd ~/go/bin/ && ls go*.*)
+echo -e \\nNOTE: Current active Go version is $(go version)\\nOther Go versions available: $go_versions\\n
+
+
 ########
 # Python
 ########
@@ -61,26 +82,6 @@ function enable_python_venv {
     source "$env_path/Scripts/activate"
     echo "NOTE: Enabled Python virtual environment"
 }
-
-
-############
-# Go profile
-############
-export PATH="$(go env GOPATH)/bin:$PATH"  # GOPATH, note: instead consider doing PATH="$(go env GOPATH)/bin:$PATH"
-
-if [ -n "$GOPRIVATE" ]
-then
-    _OLD_GOPRIVATE="$GOPRIVATE,"
-fi
-export GOPRIVATE="${_OLD_GOPRIVATE}\
-github.com/bruc3mackenzi3"
-
-# Switch to non-default version
-#alias 'go=go1.19.4'
-#alias 'go=go1.15.15'
-
-go_versions=$(cd ~/go/bin/ && ls go*.*)
-echo -e \\nNOTE: Current active Go version is $(go version)\\nOther Go versions available: $go_versions\\n
 
 
 ####################

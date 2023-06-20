@@ -28,7 +28,7 @@ alias 'git_recent=git for-each-ref --count=30 --sort=-committerdate refs/heads/ 
 
 # Shortform aliases
 alias 'd=docker'
-alias 'dc=docker compose'
+alias 'dc=docker-compose'
 alias 'g=git'
 alias 'gc=gcloud'
 alias 'k=kubectl'
