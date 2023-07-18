@@ -54,6 +54,7 @@ fi
 ############
 #export PATH="$(go env GOPATH)/bin:$PATH"
 export PATH="/Users/brucem/sdk/go1.19.4/bin/:$PATH"
+export PATH="$PATH:$(go env GOPATH)/bin"
 
 # Switch to non-default version
 #alias 'go=go1.19.4'  # /Users/brucem/sdk/go1.19.4/bin/go
