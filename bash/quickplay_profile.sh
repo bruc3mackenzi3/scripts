@@ -11,11 +11,14 @@ then
     _OLD_GOPRIVATE="$GOPRIVATE,"
 fi
 export GOPRIVATE="${_OLD_GOPRIVATE}\
+github.com/fl-g6,\
 github.com/fl-vod,\
 github.com/fl-vod-gcp,\
 github.com/fl-media,\
 github.com/fl-media-gcp,\
 github.com/fl-edge-service,\
+github.com/pldt-edge,\
+github.com/pldt-cms,\
 github.com/univ-edge"
 
 _print_debug "... exiting quickplay_profile.sh"
