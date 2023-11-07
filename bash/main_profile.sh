@@ -6,21 +6,6 @@ function _print_debug() {
 }
 _print_debug "Entering main_profile.sh ..."
 
-############
-# Global Profile
-############
-# Bash prompt
-export PS1='\[\033[01;32m\]\u \[\033[00m\]\[\033[01;34m\]\W\[\033[00m\]\$ '
-export CLICOLOR=1  # enables color output for ls command
-
-. ~/.profiles/quickplay_profile.sh
-. ~/.profiles/aliases.sh
-
-# Executable paths to prepend and append to PATH
-_PATH_PREFIX=":"  # always end with :
-_PATH_SUFFIX=":$HOME/bin"  # always begin with :
-export PATH=$_PATH_PREFIX$PATH$_PATH_SUFFIX
-
 
 #############
 # OSX profile
@@ -32,6 +17,8 @@ if [[ "$env" == "Darwin" ]]; then
 
     # Enable git auto-completion - https://apple.stackexchange.com/a/336997
     [ -f /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash ] && . /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash
+
+    [ -f /Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh ] && . /Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh
 
     # Path entries
     _PATH_PREFIX="/opt/homebrew/opt/coreutils/libexec/gnubin/:"  # always end with :
@@ -47,6 +34,56 @@ fi
 if [[ -n $WSLENV ]]; then
     export WHOME="/mnt/c/Users/BMacK/"
 fi
+
+
+############
+# Global Profile
+############
+# Bash prompt
+# Reference: https://brettterpstra.com/2009/11/17/my-new-favorite-bash-prompt/
+prompt_command() {
+    if [ $? -eq 0 ]; then # set an error string for the prompt, if applicable
+        ERROR_PROMPT=""
+    else
+        ERROR_PROMPT='->($?) '
+    fi
+
+    # Note: this depends on git_prompt.sh being set in current environment
+    if [ "\$(type -t __git_ps1)" ]; then # if we're in a Git repo, show current branch
+        GIT_BRANCH="\$(__git_ps1 '(%s) ')"
+    fi
+
+    local DEFAULT="\[\033[0m\]"
+    local RED="\[\033[0;31m\]"
+    local PURPLE="\[\033[0;35m\]"
+    local CYAN="\[\033[0;36m\]"
+    local GRAY="\[\033[0;37m\]"
+    local DARK_GRAY="\[\033[1;30m\]"
+    local LIGHT_GREEN="\[\033[1;32m\]"
+    local YELLOW="\[\033[1;33m\]"
+    local LIGHT_BLUE="\[\033[1;34m\]"
+    local LIGHT_CYAN="\[\033[1;36m\]"
+    local WHITE="\[\033[1;37m\]"
+
+    local GCLOUD_PROJECT="($(get_active_gcloud_project)) "
+
+    export PS1="${LIGHT_GREEN}\u ${YELLOW}${GIT_BRANCH}${LIGHT_BLUE}${GCLOUD_PROJECT}${RED}${ERROR_PROMPT}${LIGHT_CYAN}\W${DEFAULT}\$ "
+}
+PROMPT_COMMAND=prompt_command
+
+get_active_gcloud_project() {
+    gcloud config configurations list --filter IS_ACTIVE=True | tail -1 | awk '{print $1}'
+}
+
+export CLICOLOR=1  # enables color output for ls command
+
+. ~/.profiles/quickplay_profile.sh
+. ~/.profiles/aliases.sh
+
+# Executable paths to prepend and append to PATH
+_PATH_PREFIX=":"  # always end with :
+_PATH_SUFFIX=":$HOME/bin"  # always begin with :
+export PATH=$_PATH_PREFIX$PATH$_PATH_SUFFIX
 
 
 ############
